@@ -1,0 +1,76 @@
+version: '3.6'
+services:
+
+  node:
+    build: docker/nodejs
+    depends_on:
+      - php-fpm
+    volumes:
+      - "./:/www"
+    networks:
+      - laravel
+  php-fpm:
+    build: docker/php-fpm
+    depends_on:
+      - db
+    volumes:
+      - "./:/www"
+    environment:
+      - "DOCKER_PHP_CONFIG=${DOCKER_PHP_CONFIG}"
+      - "DOCKER_XDEBUG=${DOCKER_XDEBUG}"
+      - "DOCKER_SUPERVISOR=${DOCKER_SUPERVISOR}"
+      - "DOCKER_CRON=${DOCKER_CRON}"
+    networks:
+      - laravel
+
+  nginx:
+    image: nginx:1.16-alpine
+    depends_on:
+      - php-fpm
+    ports:
+      - "8100:80"
+      - "8143:443"
+    volumes:
+      - "./:/www"
+      - "./docker/nginx/conf.d:/etc/nginx/conf.d"
+    networks:
+      - laravel
+
+  db:
+    image: postgres:12-alpine
+    volumes:
+      - ./docker/postgres/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${DOCKER_DATABASE}
+      - POSTGRES_USER=${DOCKER_USERNAME}
+      - POSTGRES_PASSWORD=${DOCKER_PASSWORD}
+    ports:
+      - "8101:5432"
+    networks:
+      - laravel
+
+  test-db:
+    image: postgres:12-alpine
+    volumes:
+      - ./docker/postgres/postgres-test:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${DOCKER_DATABASE_TEST}
+      - POSTGRES_USER=${DOCKER_USERNAME}
+      - POSTGRES_PASSWORD=${DOCKER_PASSWORD}
+    ports:
+      - "8102:5432"
+    networks:
+      - laravel
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "8103:8025"
+    depends_on:
+      - php-fpm
+    networks:
+      - laravel
+
+networks:
+  laravel:
+    driver: bridge
