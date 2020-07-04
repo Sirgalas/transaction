@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Entities\PaymentStatus;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +12,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserSeeder::class);
+        $this->truncate();
+        $this->call(PaymentStatusSeeder::class);
+    }
+
+    protected function truncate()
+    {
+        PaymentStatus::truncate();
     }
 }

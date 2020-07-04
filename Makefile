@@ -33,6 +33,7 @@ connect_nginx: # nginx command line
 
 connect_db: # database command line
 	@docker-compose -f ${DOCKER_CONFIG} exec db bash
+
 connect_test_db: # database command line
 	@docker-compose -f ${DOCKER_CONFIG} exec test-db bash
 
@@ -42,8 +43,9 @@ init:
 vendor: # composer install
 	@docker-compose -f ${DOCKER_CONFIG} exec -u www -w /www/app php-fpm composer install
 
-testing: # composer install
-	@docker-compose -f ${DOCKER_CONFIG} exec -u www -w /www/app php-fpm vendor/bin/phpunit
+
+
+
 
 
 key: # gen application key
@@ -61,11 +63,14 @@ test: # run all tests
 create_controller: # create controller name=[controllerName]
 	@docker-compose -f ${DOCKER_CONFIG} exec -u www -w /www/app php-fpm php artisan make:controller $(name)
 
-create_model: # create model name=[modelName]
-	@docker-compose -f ${DOCKER_CONFIG} exec -u www -w /www/app php-fpm php artisan make:model Models/$(name) -m
+create_entity: # create model name=[modelName]
+	@docker-compose -f ${DOCKER_CONFIG} exec -u www -w /www/app php-fpm php artisan make:model Entities/$(name) -m
 
 create_seeder: # create seeder name=[seederName]
 	@docker-compose -f ${DOCKER_CONFIG} exec -u www -w /www/app php-fpm php artisan make:seeder $(name)TableSeeder
 
-create_test: # create seeder name=[seederName]
+create_test_feature: # create feture test name=[testName]
 	@docker-compose -f ${DOCKER_CONFIG} exec -u www -w /www/app php-fpm php artisan make:test $(name)
+
+create_test_unit: # create unit test name=[testName]
+	@docker-compose -f ${DOCKER_CONFIG} exec -u www -w /www/app php-fpm php artisan make:test  -- unit $(name)

@@ -1,0 +1,40 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+#app{
+    background: #F0F4F7;
+}
+
+header.bg-white{
+    background-color: #4996f4
+}
+header.bg-white a{
+    color: #fff;
+}
+
+.container h1.text-grey-darker{
+    color:#9A9EA2
+}
+
+.container div nav .list-reset li a{
+    color:#9A9EA2
+}
+
+div nav .list-reset .active-tab{
+    border-bottom: 2px solid #4996f4;
+}
+
+.text-grey-dark, .text-teal{
+    color: #999a9b;
+}
+
+.container .flex .flex-and{
+    background-color: #4996f4
+}
+/**/
+circle{
+    background-color: #4996f4
+}

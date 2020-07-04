@@ -17,6 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('invoices/new','InvoicesController@create')->name('invoices.create')->middleware('auth');
+Route::get('payments/new','PaymentController@create')->name('payment.create')->middleware('auth');
+Route::get('payments/dashboard','PaymentController@dashboard')->name('payment.create')->middleware('auth');
 
 Route::get('login','LoginController@showLoginForm')->name('login');
+
+Route::post('/payments','PaymentController@store')->name('payment.store')->middleware('auth');
