@@ -6,10 +6,10 @@ then
 	cp "$PHP_INI_PATH-$DOCKER_PHP_CONFIG" "$PHP_INI_PATH"
 fi
 
-if [ "$DOCKER_XDEBUG" != "" ]
-then
-	echo -e "zend_extension=xdebug.so\n[xdebug]\nxdebug.remote_enable=1\nxdebug.remote_host=\"$DOCKER_XDEBUG\"\nxdebug.overload_var_dump=1\n" > /usr/local/etc/php/conf.d/enable-xdebug.ini
-fi
+#if [ "$DOCKER_XDEBUG" != "" ]
+#then
+#	echo -e "zend_extension=xdebug.so\n[xdebug]\nxdebug.remote_enable=1\nxdebug.remote_host=\"$DOCKER_XDEBUG\"\nxdebug.overload_var_dump=1\n" > /usr/local/etc/php/conf.d/enable-xdebug.ini
+#fi
 
 
 DOCKER_SUPERVISOR_DIR=$(pwd)/docker/supervisor.d

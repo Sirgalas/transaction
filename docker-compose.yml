@@ -14,12 +14,11 @@ services:
     depends_on:
       - db
     volumes:
-      - "./:/www"
+      - "./app:/www"
     environment:
-      - "DOCKER_PHP_CONFIG=${DOCKER_PHP_CONFIG}"
-      - "DOCKER_XDEBUG=${DOCKER_XDEBUG}"
-      - "DOCKER_SUPERVISOR=${DOCKER_SUPERVISOR}"
-      - "DOCKER_CRON=${DOCKER_CRON}"
+      - "XDEBUG_CONFIG=remote_host=192.168.220.1 remote_enable=1"
+      - "PHP_IDE_CONFIG=serverName=Docker"
+
     networks:
       - laravel
 
@@ -74,3 +73,7 @@ services:
 networks:
   laravel:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.220.0/28

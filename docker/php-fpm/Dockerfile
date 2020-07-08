@@ -40,7 +40,8 @@ RUN docker-php-ext-configure gd \
 RUN docker-php-ext-install -j$(nproc) \
 			gd \
 			bcmath
-RUN pecl install xdebug-2.6.1
+RUN pecl install xdebug-2.7.1 \
+&& docker-php-ext-enable xdebug
 	# 		redis-4.2.0 \
 	# 		memcached-3.1.3 \
 	# \
@@ -98,11 +99,11 @@ RUN set -xe \
 #
 # Exctend entry point with own code
 #
-COPY docker-ep-extra.sh /
+#COPY docker-ep-extra.sh /
 
-RUN set -xe \
-		&& sed -i '/^set -e/r /docker-ep-extra.sh' /usr/local/bin/docker-php-entrypoint \
-		&& rm -f /docker-ep-extra.sh
+#RUN set -xe \
+#		&& sed -i '/^set -e/r /docker-ep-extra.sh' /usr/local/bin/docker-php-entrypoint \
+#		&& rm -f /docker-ep-extra.sh
 
 
 #
